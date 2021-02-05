@@ -7,33 +7,39 @@ const newHtmlContainer = document.querySelector(".newHtml");
 
 async function getGames() {
 
-    const response = await fetch(url);
+    try {
 
-    const data = await response.json();
+        const response = await fetch(url);
 
-    console.log(data);
+        const data = await response.json();
 
-    const gameNames = data.results;
+        console.log(data);
 
-    newHtmlContainer.innerHTML = "";
+        const gameNames = data.results;
 
-    for (let i = 0; i < gameNames.length; i++) {
-        console.log(gameNames[i].name);
-        console.log(gameNames[i].rating);
-        console.log(gameNames[i].tags.length);
+        newHtmlContainer.innerHTML = "";
 
-        if (i === 8) {
-            break;
+        for (let i = 0; i < gameNames.length; i++) {
+            // console.log(gameNames[i].name);
+            // console.log(gameNames[i].rating);
+            // console.log(gameNames[i].tags.length);
+
+            if (i === 8) {
+                break;
+            }
+
+            newHtmlContainer.innerHTML += `<div class="gameDetails">
+                                            <h4>${gameNames[i].name}</h4>
+                                            <p>Rating: ${gameNames[i].rating}</p>
+                                            <p>Tags: ${gameNames[i].tags.length}</p>
+                                            </div>`;
         }
-
-        newHtmlContainer.innerHTML += `<div class="gameDetails">
-                                        <h4>${gameNames[i].name}</h4>
-                                        <p>Rating: ${gameNames[i].rating}</p>
-                                        <p>Tags: ${gameNames[i].tags.length}</p>
-                                        </div>`;
+    } catch (error) {
+        console.log("An error occured");
+        newHtmlContainer.innerHTML = displayError("An error occured in your code, dummy!");
     }
 
-    }
+}
 
  getGames();
 
