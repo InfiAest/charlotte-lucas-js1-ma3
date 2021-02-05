@@ -1,52 +1,39 @@
 // question 2
 
-// const gamesUrl = "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating";
+const url = "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating";
 
-// const resultsContainer = document.querySelector(".results");
+const newHtmlContainer = document.querySelector(".newHtml");
 
 
-// async function getGames() {
-
-//     const response = await fetch(gamesUrl);
-
-//     const apiResults = await response.json();
-
-//     for (let i = 0; i > apiResults.length; i++) {
-//         console.log(apiResults[i].results);
-
-//         if (i === 8) {
-//             break;
-//         }
-
-//         resultsContainer.innerHTML += `<div class="result">${apiResults[i].name}</div>`;
-//     }
-
-// }
-
-// getGames();
-
-const url = "https://cat-fact.herokuapp.com/facts";
-
-const resultsContainer = document.querySelector(".results");
-
-async function getCats() {
-    // fetch
+async function getGames() {
 
     const response = await fetch(url);
 
-    const facts = await response.json();
+    const data = await response.json();
 
-    resultsContainer.innerHTML = "";
+    console.log(data);
 
-    for (let i = 0; i < facts.length; i++) {
-        console.log(facts[i].text);
+    const gameNames = data.results;
+
+    newHtmlContainer.innerHTML = "";
+
+    for (let i = 0; i < gameNames.length; i++) {
+        console.log(gameNames[i].name);
+        console.log(gameNames[i].rating);
+        console.log(gameNames[i].tags.length);
 
         if (i === 8) {
             break;
         }
 
-        resultsContainer.innerHTML += `<div class="result">${facts[i].text}</div>`;
+        newHtmlContainer.innerHTML += `<div class="gameDetails">
+                                        <h4>${gameNames[i].name}</h4>
+                                        <p>Rating: ${gameNames[i].rating}</p>
+                                        <p>Tags: ${gameNames[i].tags.length}</p>
+                                        </div>`;
     }
-}
 
-getCats();
+    }
+
+ getGames();
+
